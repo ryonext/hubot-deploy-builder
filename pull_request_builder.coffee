@@ -17,7 +17,13 @@
 
 module.exports = (robot) ->
   github = require("githubot")(robot)
+
   robot.respond /deploy ?(.+)/i, (msg) ->
+    github.handleErrors (response) ->
+      if response.body.indexOf("A pull request already exists") > -1
+          msg.send "もうそのプルリクあるよ(；´Д｀)"
+      if response.body.indexOf("No commits") > -1
+          msg.send "差分無いよ(；´Д｀)"
     repo = msg.match[1]
     url_api_base = "https://api.github.com"
     data = {
