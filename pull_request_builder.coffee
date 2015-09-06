@@ -49,6 +49,7 @@ module.exports = (robot) ->
     github.get url, data, (response) ->
       if response.length > 0
         msg.send "そのpull requestはもうあります。"
+        msg.send "https://github.com/#{ghOrg}/#{repo}/pull/#{response[0].number}"
       else
         createPullRequest(url, data)
 
